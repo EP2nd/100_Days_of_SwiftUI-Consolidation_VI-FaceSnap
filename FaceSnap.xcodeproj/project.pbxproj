@@ -11,6 +11,10 @@
 		B8E70E55299803EA008354CA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E70E54299803EA008354CA /* ContentView.swift */; };
 		B8E70E57299803ED008354CA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8E70E56299803ED008354CA /* Assets.xcassets */; };
 		B8E70E5A299803ED008354CA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8E70E59299803ED008354CA /* Preview Assets.xcassets */; };
+		B8E70E64299823B0008354CA /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E70E63299823B0008354CA /* ImagePicker.swift */; };
+		B8E70E6B29983BDE008354CA /* FileManager-DocumentsDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E70E6A29983BDE008354CA /* FileManager-DocumentsDirectory.swift */; };
+		B8E70E6D29985155008354CA /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E70E6C29985155008354CA /* Person.swift */; };
+		B8E70E6F299851E5008354CA /* PersonNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E70E6E299851E5008354CA /* PersonNameView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +23,10 @@
 		B8E70E54299803EA008354CA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B8E70E56299803ED008354CA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B8E70E59299803ED008354CA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		B8E70E63299823B0008354CA /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		B8E70E6A29983BDE008354CA /* FileManager-DocumentsDirectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager-DocumentsDirectory.swift"; sourceTree = "<group>"; };
+		B8E70E6C29985155008354CA /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
+		B8E70E6E299851E5008354CA /* PersonNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonNameView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,6 +43,8 @@
 		B8E70E46299803EA008354CA = {
 			isa = PBXGroup;
 			children = (
+				B8E70E70299851F5008354CA /* Extensions */,
+				B8E70E67299826A5008354CA /* Tools */,
 				B8E70E51299803EA008354CA /* FaceSnap */,
 				B8E70E50299803EA008354CA /* Products */,
 			);
@@ -52,7 +62,8 @@
 			isa = PBXGroup;
 			children = (
 				B8E70E52299803EA008354CA /* FaceSnapApp.swift */,
-				B8E70E54299803EA008354CA /* ContentView.swift */,
+				B8E70E6029981AB6008354CA /* Views */,
+				B8E70E6629982662008354CA /* Objects */,
 				B8E70E56299803ED008354CA /* Assets.xcassets */,
 				B8E70E58299803ED008354CA /* Preview Content */,
 			);
@@ -65,6 +76,41 @@
 				B8E70E59299803ED008354CA /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		B8E70E6029981AB6008354CA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B8E70E54299803EA008354CA /* ContentView.swift */,
+				B8E70E6E299851E5008354CA /* PersonNameView.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		B8E70E6629982662008354CA /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				B8E70E6C29985155008354CA /* Person.swift */,
+			);
+			name = Objects;
+			sourceTree = "<group>";
+		};
+		B8E70E67299826A5008354CA /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				B8E70E63299823B0008354CA /* ImagePicker.swift */,
+			);
+			name = Tools;
+			path = FaceSnap;
+			sourceTree = "<group>";
+		};
+		B8E70E70299851F5008354CA /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				B8E70E6A29983BDE008354CA /* FileManager-DocumentsDirectory.swift */,
+			);
+			name = Extensions;
+			path = FaceSnap;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,7 +183,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B8E70E6F299851E5008354CA /* PersonNameView.swift in Sources */,
+				B8E70E6D29985155008354CA /* Person.swift in Sources */,
+				B8E70E6B29983BDE008354CA /* FileManager-DocumentsDirectory.swift in Sources */,
 				B8E70E55299803EA008354CA /* ContentView.swift in Sources */,
+				B8E70E64299823B0008354CA /* ImagePicker.swift in Sources */,
 				B8E70E53299803EA008354CA /* FaceSnapApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
