@@ -16,8 +16,8 @@ struct ContentView: View {
     
     @State private var inputImage: UIImage?
     
-    @State private var photoID: String?
-    @State private var username: String?
+    @State private var imageID = ""
+    @State private var username = ""
     
     let savePath = FileManager.documentsDirectory.appendingPathComponent("SavedFaces")
     
@@ -26,7 +26,10 @@ struct ContentView: View {
             Form {
                 List(users.personDetails.sorted()) { person in
                     HStack {
-                        Image("\(person.photoID)")
+                        Image(uiImage: UIImage(systemName: person.photoID)!)
+                            .onAppear {
+                                savePath.loadImage(UIImage(systemName: imageID))
+                            }
                         
                         Text(person.name)
                     }
@@ -36,7 +39,7 @@ struct ContentView: View {
             .navigationTitle("FaceSnap")
             .toolbar {
                 Button {
-                    addUser()
+                    showingImagePicker = true
                 } label: {
                     Label("Add User", systemImage: "plus")
                 }
@@ -45,7 +48,7 @@ struct ContentView: View {
                 if let jpegData = inputImage?.jpegData(compressionQuality: 0.8) {
                     let uuid = UUID().uuidString
                     
-                    photoID = uuid
+                    imageID = uuid
                     
                     try? jpegData.write(to: savePath.appendingPathComponent(uuid), options: [.atomic, .completeFileProtection])
                     
@@ -56,13 +59,18 @@ struct ContentView: View {
                 ImagePicker(image: $inputImage)
             }
             .sheet(isPresented: $askingForUsername) {
-                PersonNameView()
+                PersonNameView(users: users, imageID: imageID)
             }
         }
     }
     
-    func addUser() {
-        users.personDetails.append(Person.example)
+    init() {
+        do {
+            let data = try Data(contentsOf: savePath)
+            users.personDetails = try JSONDecoder().decode([Person].self, from: data)
+        } catch {
+            users.personDetails = []
+        }
     }
 }
 

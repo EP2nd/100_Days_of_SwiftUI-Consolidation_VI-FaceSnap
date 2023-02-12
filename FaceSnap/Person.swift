@@ -13,12 +13,12 @@ class SharedPeople: ObservableObject {
 
 struct Person: Codable, Equatable, Identifiable, Comparable {
     var id = UUID()
-    var photoID: UUID
+    var photoID: String
     var name: String
     
     static func <(lhs: Person, rhs: Person) -> Bool {
         lhs.name < rhs.name
     }
     
-    static var example = Person(id: UUID(), photoID: UUID(), name: "Harry Potter")
+    static var example = Person(id: UUID(), photoID: "", name: "Harry Potter")
 }
