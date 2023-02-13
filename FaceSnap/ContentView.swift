@@ -15,21 +15,22 @@ struct ContentView: View {
     @State private var askingForUsername = false
     
     @State private var inputImage: UIImage?
+    @State private var imageID: String?
     
-    @State private var imageID = ""
-    @State private var username = ""
-    
-    let savePath = FileManager.documentsDirectory.appendingPathComponent("SavedFaces")
+    let savePath = FileManager.documentsDirectory
     
     var body: some View {
         NavigationView {
             Form {
                 List(users.personDetails.sorted()) { person in
                     HStack {
-                        Image(uiImage: UIImage(systemName: person.photoID)!)
-                            .onAppear {
-                                savePath.loadImage(UIImage(systemName: imageID))
-                            }
+                        if let loadedImage = loadImageFromDisk(imageName: person.photoID) {
+                            Image(uiImage: loadedImage)
+                                .resizable()
+                                .scaledToFit()
+                        } else {
+                            Text("No image")
+                        }
                         
                         Text(person.name)
                     }
@@ -47,7 +48,6 @@ struct ContentView: View {
             .onChange(of: inputImage) { _ in
                 if let jpegData = inputImage?.jpegData(compressionQuality: 0.8) {
                     let uuid = UUID().uuidString
-                    
                     imageID = uuid
                     
                     try? jpegData.write(to: savePath.appendingPathComponent(uuid), options: [.atomic, .completeFileProtection])
@@ -59,17 +59,30 @@ struct ContentView: View {
                 ImagePicker(image: $inputImage)
             }
             .sheet(isPresented: $askingForUsername) {
-                PersonNameView(users: users, imageID: imageID)
+                PersonNameView(users: users, image: $inputImage, imageID: $imageID)
             }
         }
     }
     
-    init() {
+//    init() {
+//        do {
+//            let data = try Data(contentsOf: savePath)
+//            users.personDetails = try JSONDecoder().decode([Person].self, from: data)
+//        } catch {
+//            users.personDetails = []
+//        }
+//    }
+    
+    func loadImageFromDisk(imageName: String) -> UIImage? {
+        let imageURL = savePath.appendingPathComponent(imageName)
+        print("imgUR: \(imageURL)")
+        
         do {
-            let data = try Data(contentsOf: savePath)
-            users.personDetails = try JSONDecoder().decode([Person].self, from: data)
+            let imageData = try Data(contentsOf: imageURL)
+            return UIImage(data: imageData)
         } catch {
-            users.personDetails = []
+            print("Error: \(error.localizedDescription)")
+            return nil
         }
     }
 }

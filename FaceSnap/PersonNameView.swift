@@ -11,7 +11,8 @@ struct PersonNameView: View {
     
     @ObservedObject var users: SharedPeople
     
-    var imageID: String
+    @Binding var image: UIImage?
+    @Binding var imageID: String?
     
     @State private var name = ""
     
@@ -23,10 +24,11 @@ struct PersonNameView: View {
         NavigationView {
             Form {
                 Section("Photograph") {
-                    Image(uiImage: UIImage(systemName: imageID)!)
-                        .onAppear {
-                            savePath.loadImage(UIImage(systemName: imageID))
-                        }
+                    if let image = image {
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFit()
+                    }
                 }
                 
                 Section("Name") {
@@ -34,16 +36,25 @@ struct PersonNameView: View {
                 }
             }
             .navigationTitle("New Person")
-        }
-        .toolbar {
-            Button("Save") {
-                let person = Person(photoID: imageID, name: name)
-                users.personDetails.append(person)
-                save()
-                dismiss()
+            .toolbar {
+                Button("Save") {
+                    if let imageID = imageID {
+                        let person = Person(photoID: imageID, name: name)
+                        print("Saved person: \(person)")
+                        users.personDetails.append(person)
+                        save()
+                        dismiss()
+                    }       
+                }
             }
         }
     }
+    
+//    init(image: UIImage, users: SharedPeople, imageID: String) {
+//        self.image = image
+//        self.users = users
+//        self.imageID = imageID
+//    }
     
     func save() {
         do {
@@ -55,8 +66,8 @@ struct PersonNameView: View {
     }
 }
 
-struct PersonNameView_Previews: PreviewProvider {
-    static var previews: some View {
-        PersonNameView(users: SharedPeople(), imageID: "")
-    }
-}
+//struct PersonNameView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        PersonNameView()
+//    }
+//}
