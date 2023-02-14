@@ -23,7 +23,7 @@ struct PersonNameView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section("Photograph") {
+                Section("Photograph:") {
                     if let image = image {
                         Image(uiImage: image)
                             .resizable()
@@ -31,7 +31,7 @@ struct PersonNameView: View {
                     }
                 }
                 
-                Section("Name") {
+                Section("Name:") {
                     TextField("", text: $name)
                 }
             }
@@ -42,32 +42,16 @@ struct PersonNameView: View {
                         let person = Person(photoID: imageID, name: name)
                         print("Saved person: \(person)")
                         users.personDetails.append(person)
-                        save()
                         dismiss()
                     }       
                 }
             }
         }
     }
-    
-//    init(image: UIImage, users: SharedPeople, imageID: String) {
-//        self.image = image
-//        self.users = users
-//        self.imageID = imageID
-//    }
-    
-    func save() {
-        do {
-            let data = try JSONEncoder().encode(users.personDetails)
-            try data.write(to: savePath, options: [.atomic, .completeFileProtection])
-        } catch {
-            print("Unable to save data.")
-        }
-    }
 }
 
-//struct PersonNameView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        PersonNameView()
-//    }
-//}
+struct PersonNameView_Previews: PreviewProvider {
+    static var previews: some View {
+        PersonNameView(users: SharedPeople(), image: .constant(UIImage(contentsOfFile: "")), imageID: .constant(""))
+    }
+}

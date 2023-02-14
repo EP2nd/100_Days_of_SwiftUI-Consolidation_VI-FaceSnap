@@ -8,7 +8,24 @@
 import Foundation
 
 class SharedPeople: ObservableObject {
-    @Published var personDetails = [Person]()
+    @Published var personDetails = [Person]() {
+        didSet {
+            if let encodedPeople = try? JSONEncoder().encode(personDetails) {
+                UserDefaults.standard.set(encodedPeople, forKey: "people")
+            }
+        }
+    }
+    
+    init() {
+        if let savedPeople = UserDefaults.standard.data(forKey: "people") {
+            if let decodedPeople = try? JSONDecoder().decode([Person].self, from: savedPeople) {
+                personDetails = decodedPeople
+                return
+            }
+        }
+        
+        personDetails = []
+    }
 }
 
 struct Person: Codable, Equatable, Identifiable, Comparable {

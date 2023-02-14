@@ -27,7 +27,9 @@ struct ContentView: View {
                         if let loadedImage = loadImageFromDisk(imageName: person.photoID) {
                             Image(uiImage: loadedImage)
                                 .resizable()
-                                .scaledToFit()
+                                .scaledToFill()
+                                .frame(width: 100, height: 100)
+                                .clipped()
                         } else {
                             Text("No image")
                         }
@@ -35,7 +37,6 @@ struct ContentView: View {
                         Text(person.name)
                     }
                 }
-                .padding()
             }
             .navigationTitle("FaceSnap")
             .toolbar {
@@ -64,18 +65,8 @@ struct ContentView: View {
         }
     }
     
-//    init() {
-//        do {
-//            let data = try Data(contentsOf: savePath)
-//            users.personDetails = try JSONDecoder().decode([Person].self, from: data)
-//        } catch {
-//            users.personDetails = []
-//        }
-//    }
-    
     func loadImageFromDisk(imageName: String) -> UIImage? {
         let imageURL = savePath.appendingPathComponent(imageName)
-        print("imgUR: \(imageURL)")
         
         do {
             let imageData = try Data(contentsOf: imageURL)
