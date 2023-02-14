@@ -22,20 +22,28 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             Form {
-                List(users.personDetails.sorted()) { person in
-                    HStack {
-                        if let loadedImage = loadImageFromDisk(imageName: person.photoID) {
-                            Image(uiImage: loadedImage)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 100, height: 100)
-                                .clipped()
-                        } else {
-                            Text("No image")
+                List {
+                    ForEach(users.personDetails) { person in
+                        NavigationLink {
+                            PersonView(person: person)
+                        } label: {
+                            HStack {
+                                if let loadedImage = UIImage.loadImageFromDisk(imageName: person.photoID) {
+                                    Image(uiImage: loadedImage)
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(width: 100, height: 100)
+                                        .clipped()
+                                } else {
+                                    Text("No image")
+                                }
+                                
+                                Text(person.name)
+                            }
+                            
                         }
-                        
-                        Text(person.name)
                     }
+                    .onDelete(perform: removePerson)
                 }
             }
             .navigationTitle("FaceSnap")
@@ -63,17 +71,32 @@ struct ContentView: View {
                 PersonNameView(users: users, image: $inputImage, imageID: $imageID)
             }
         }
+        .preferredColorScheme(.dark)
     }
     
-    func loadImageFromDisk(imageName: String) -> UIImage? {
-        let imageURL = savePath.appendingPathComponent(imageName)
+    func removePerson(at offsets: IndexSet) {
+        deletePerson(at: offsets, in: users.personDetails)
+    }
+    
+    func deletePerson(at offsets: IndexSet, in personArray: [Person]) {
+        var personToRemove = IndexSet()
+        var imageName: String = ""
+        
+        for offset in offsets {
+            let person = personArray[offset]
+            imageName = person.photoID
+            
+            if let index = users.personDetails.firstIndex(of: person) {
+                personToRemove.insert(index)
+            }
+        }
+        
+        users.personDetails.remove(atOffsets: personToRemove)
         
         do {
-            let imageData = try Data(contentsOf: imageURL)
-            return UIImage(data: imageData)
+            try FileManager.default.removeItem(atPath: savePath.appendingPathComponent(imageName).path)
         } catch {
             print("Error: \(error.localizedDescription)")
-            return nil
         }
     }
 }

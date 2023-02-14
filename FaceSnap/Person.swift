@@ -8,7 +8,7 @@
 import Foundation
 
 class SharedPeople: ObservableObject {
-    @Published var personDetails = [Person]() {
+    @Published var personDetails = [Person]().sorted() {
         didSet {
             if let encodedPeople = try? JSONEncoder().encode(personDetails) {
                 UserDefaults.standard.set(encodedPeople, forKey: "people")

@@ -40,7 +40,6 @@ struct PersonNameView: View {
                 Button("Save") {
                     if let imageID = imageID {
                         let person = Person(photoID: imageID, name: name)
-                        print("Saved person: \(person)")
                         users.personDetails.append(person)
                         dismiss()
                     }       
