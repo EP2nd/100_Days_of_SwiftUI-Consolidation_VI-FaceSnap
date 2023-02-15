@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		B8DA12C9299BA0D900FE6EDA /* PersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DA12C8299BA0D900FE6EDA /* PersonView.swift */; };
 		B8DA12CB299BA29F00FE6EDA /* UIImage-SaveAndLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DA12CA299BA29F00FE6EDA /* UIImage-SaveAndLoad.swift */; };
+		B8DA12CD299C487600FE6EDA /* LocationFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DA12CC299C487600FE6EDA /* LocationFetcher.swift */; };
 		B8E70E53299803EA008354CA /* FaceSnapApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E70E52299803EA008354CA /* FaceSnapApp.swift */; };
 		B8E70E55299803EA008354CA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E70E54299803EA008354CA /* ContentView.swift */; };
 		B8E70E57299803ED008354CA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8E70E56299803ED008354CA /* Assets.xcassets */; };
@@ -22,6 +23,7 @@
 /* Begin PBXFileReference section */
 		B8DA12C8299BA0D900FE6EDA /* PersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonView.swift; sourceTree = "<group>"; };
 		B8DA12CA299BA29F00FE6EDA /* UIImage-SaveAndLoad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage-SaveAndLoad.swift"; sourceTree = "<group>"; };
+		B8DA12CC299C487600FE6EDA /* LocationFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationFetcher.swift; sourceTree = "<group>"; };
 		B8E70E4F299803EA008354CA /* FaceSnap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FaceSnap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8E70E52299803EA008354CA /* FaceSnapApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceSnapApp.swift; sourceTree = "<group>"; };
 		B8E70E54299803EA008354CA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 				B8E70E54299803EA008354CA /* ContentView.swift */,
 				B8DA12C8299BA0D900FE6EDA /* PersonView.swift */,
 				B8E70E63299823B0008354CA /* ImagePicker.swift */,
+				B8DA12CC299C487600FE6EDA /* LocationFetcher.swift */,
 				B8E70E6E299851E5008354CA /* PersonNameView.swift */,
 			);
 			name = Views;
@@ -188,6 +191,7 @@
 				B8E70E64299823B0008354CA /* ImagePicker.swift in Sources */,
 				B8E70E53299803EA008354CA /* FaceSnapApp.swift in Sources */,
 				B8DA12C9299BA0D900FE6EDA /* PersonView.swift in Sources */,
+				B8DA12CD299C487600FE6EDA /* LocationFetcher.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,6 +323,8 @@
 				DEVELOPMENT_TEAM = 8X7MLERU8X;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to the camera to let you capture new faces.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need access to your current location to show it on a map assigned to each user you add.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -348,6 +354,8 @@
 				DEVELOPMENT_TEAM = 8X7MLERU8X;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to the camera to let you capture new faces.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need access to your current location to show it on a map assigned to each user you add.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

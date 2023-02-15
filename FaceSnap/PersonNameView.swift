@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import MapKit
 
 struct PersonNameView: View {
     
@@ -15,6 +16,8 @@ struct PersonNameView: View {
     @Binding var imageID: String?
     
     @State private var name = ""
+    
+    let locationFetcher = LocationFetcher()
     
     @Environment(\.dismiss) var dismiss
     
@@ -39,13 +42,16 @@ struct PersonNameView: View {
             .toolbar {
                 Button("Save") {
                     if let imageID = imageID {
-                        let person = Person(photoID: imageID, name: name)
-                        users.personDetails.append(person)
-                        dismiss()
-                    }       
+                        if let location = self.locationFetcher.lastKnownLocation {
+                            let person = Person(photoID: imageID, name: name, latitude: location.latitude, longitude: location.longitude)
+                            users.personDetails.append(person)
+                            dismiss()
+                        }
+                    }
                 }
             }
         }
+        .onAppear(perform: locationFetcher.start)
     }
 }
 

@@ -65,7 +65,7 @@ struct ContentView: View {
                 }
             }
             .sheet(isPresented: $showingImagePicker) {
-                ImagePicker(image: $inputImage)
+                ImagePicker(selectedImage: $inputImage)
             }
             .sheet(isPresented: $askingForUsername) {
                 PersonNameView(users: users, image: $inputImage, imageID: $imageID)

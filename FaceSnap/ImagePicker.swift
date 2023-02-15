@@ -5,14 +5,63 @@
 //  Created by Edwin Przeźwiecki Jr. on 11/02/2023.
 //
 
-import PhotosUI
+//import PhotosUI
+//import SwiftUI
+
+//struct ImagePicker: UIViewControllerRepresentable {
+//
+//    @Binding var image: UIImage?
+//
+//    class Coordinator: NSObject, PHPickerViewControllerDelegate {
+//
+//        var parent: ImagePicker
+//
+//        init(_ parent: ImagePicker) {
+//            self.parent = parent
+//        }
+//
+//        func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+//            picker.dismiss(animated: true)
+//
+//            guard let provider = results.first?.itemProvider else { return }
+//
+//            if provider.canLoadObject(ofClass: UIImage.self) {
+//                provider.loadObject(ofClass: UIImage.self) { image, _ in
+//                    self.parent.image = image as? UIImage
+//                }
+//            }
+//        }
+//    }
+//
+//    func makeUIViewController(context: Context) -> PHPickerViewController {
+//        var config = PHPickerConfiguration()
+//        config.filter = .images
+//
+//        let picker = PHPickerViewController(configuration: config)
+//        picker.delegate = context.coordinator
+//
+//        return picker
+//    }
+//
+//    func updateUIViewController(_ uiViewController: PHPickerViewController, context: Context) {
+//
+//    }
+//
+//    func makeCoordinator() -> Coordinator {
+//        Coordinator(self)
+//    }
+//}
+
 import SwiftUI
+import UIKit
 
 struct ImagePicker: UIViewControllerRepresentable {
     
-    @Binding var image: UIImage?
+    @Binding var selectedImage: UIImage?
     
-    class Coordinator: NSObject, PHPickerViewControllerDelegate {
+    @Environment(\.presentationMode) private var presentationMode
+    
+    final class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
         
         var parent: ImagePicker
         
@@ -20,29 +69,34 @@ struct ImagePicker: UIViewControllerRepresentable {
             self.parent = parent
         }
         
-        func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-            picker.dismiss(animated: true)
+        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
             
-            guard let provider = results.first?.itemProvider else { return }
-            
-            if provider.canLoadObject(ofClass: UIImage.self) {
-                provider.loadObject(ofClass: UIImage.self) { image, _ in
-                    self.parent.image = image as? UIImage
-                }
+            if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+                parent.selectedImage = image
             }
+            
+            parent.presentationMode.wrappedValue.dismiss()
         }
     }
+
+    func makeUIViewController(context: UIViewControllerRepresentableContext<ImagePicker>) -> UIImagePickerController {
         
-    func makeUIViewController(context: Context) -> PHPickerViewController {
-        var config = PHPickerConfiguration()
-        config.filter = .images
+        let imagePicker = UIImagePickerController()
         
-        let picker = PHPickerViewController(configuration: config)
-        picker.delegate = context.coordinator
-        return picker
+        imagePicker.allowsEditing = false
+        
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            imagePicker.sourceType = .camera
+        } else {
+            imagePicker.sourceType = .photoLibrary
+        }
+        
+        imagePicker.delegate = context.coordinator
+        
+        return imagePicker
     }
     
-    func updateUIViewController(_ uiViewController: PHPickerViewController, context: Context) {
+    func updateUIViewController(_ uiViewController: UIImagePickerController, context: UIViewControllerRepresentableContext<ImagePicker>) {
         
     }
     
